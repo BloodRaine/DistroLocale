@@ -53,7 +53,7 @@ namespace RosSharp.RosBridgeClient
             if (laserScanVisualizers != null)
                 foreach (LaserScanVisualizer laserScanVisualizer in laserScanVisualizers)
                     laserScanVisualizer.SetSensorData(gameObject.transform, directions, ranges, range_min, range_max);
-
+            print("scan");
             return ranges;
         }
 
