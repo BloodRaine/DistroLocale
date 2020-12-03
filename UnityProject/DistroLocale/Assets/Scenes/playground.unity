@@ -563,163 +563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae53a797b5479c43b9a3aeac7e35e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &288399402
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 288399411}
-  - component: {fileID: 288399410}
-  - component: {fileID: 288399409}
-  - component: {fileID: 288399408}
-  - component: {fileID: 288399407}
-  - component: {fileID: 288399406}
-  - component: {fileID: 288399405}
-  - component: {fileID: 288399404}
-  - component: {fileID: 288399403}
-  m_Layer: 0
-  m_Name: RosConnector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &288399403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef6e2677fa36b0c46a9f6d8bd354c686, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /camera/rgb/image_raw/compressed
-  TimeStep: 0
-  meshRenderer: {fileID: 0}
---- !u!114 &288399404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57574a16cdc8b64408e42846c7ae13fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /odom
-  TimeStep: 0
-  PublishedTransform: {fileID: 0}
---- !u!114 &288399405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8e7046e9f110da4a81262f9658c8514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Vertical
---- !u!114 &288399406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8e7046e9f110da4a81262f9658c8514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Horizontal
---- !u!114 &288399407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92dedf3f173285b4d9a806dec2334596, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /joy
-  FrameId: Unity
---- !u!114 &288399408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fe4cf3b1dd3507418f7ec019f9193ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /joint_states
-  TimeStep: 0
-  JointNames:
-  - wheel_left_joint
-  - wheel_right_joint
-  JointStateWriters:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &288399409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8346600dd4db234680344092ad74320, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UrdfRobot: {fileID: 0}
---- !u!114 &288399410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff98778ae051cfd40a6e4effdf851ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SecondsTimeout: 10
-  Serializer: 0
-  protocol: 0
-  RosBridgeServerUrl: ws://192.168.56.102:9090
---- !u!4 &288399411
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288399402}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22630675, y: 0.37943262, z: 0.56673455}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &297260344
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,21 +727,6 @@ MonoBehaviour:
   range_max: 3.5
   ranges: []
   intensities: []
---- !u!114 &687702508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687702506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /scan
-  laserScanReader: {fileID: 687702507}
-  FrameId: Unity
 --- !u!114 &687702509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +743,21 @@ MonoBehaviour:
   Serializer: 0
   protocol: 0
   RosBridgeServerUrl: ws://192.168.0.1:9090
+--- !u!114 &687702510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687702506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /scan
+  laserScanReader: {fileID: 687702507}
+  FrameId: Unity
 --- !u!1 &761623029
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +803,7 @@ Transform:
   - {fileID: 192328147}
   - {fileID: 297260345}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &761623033
 MonoBehaviour:
@@ -1801,7 +1644,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1917321595}
   - component: {fileID: 1917321594}
-  - component: {fileID: 1917321593}
   - component: {fileID: 1917321592}
   m_Layer: 0
   m_Name: Controller
@@ -1823,22 +1665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Topic: 
-  PublishedTransform: {fileID: 0}
---- !u!114 &1917321593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917321591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb64e2e126e45a841b84bdd797701aff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: 
-  TimeStep: 0
-  laserScanWriter: {fileID: 0}
+  PublishedTransform: {fileID: 761623031}
 --- !u!114 &1917321594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1867,7 +1694,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1964731768
 GameObject:
@@ -1905,7 +1732,7 @@ Transform:
   - {fileID: 1563210349}
   - {fileID: 1265542107}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005543724
 GameObject:
