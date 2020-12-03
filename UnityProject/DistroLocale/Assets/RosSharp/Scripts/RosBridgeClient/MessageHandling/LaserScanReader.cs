@@ -53,7 +53,6 @@ namespace RosSharp.RosBridgeClient
             if (laserScanVisualizers != null)
                 foreach (LaserScanVisualizer laserScanVisualizer in laserScanVisualizers)
                     laserScanVisualizer.SetSensorData(gameObject.transform, directions, ranges, range_min, range_max);
-            print("scan");
             return ranges;
         }
 
@@ -67,11 +66,18 @@ namespace RosSharp.RosBridgeClient
             {
                 rays[i] = new Ray(transform.position, Quaternion.Euler(new Vector3(0, angle_min - angle_increment * i * 180 / Mathf.PI, 0)) * transform.forward);
                 directions[i] = Quaternion.Euler(-transform.rotation.eulerAngles) * rays[i].direction;
+                directions[i].y = transform.position.y;
+
+                
+                // print(transform.position);
 
                 raycastHits[i] = new RaycastHit();
                 if (Physics.Raycast(rays[i], out raycastHits[i], range_max))
                     if (raycastHits[i].distance >= range_min && raycastHits[i].distance <= range_max)
                         ranges[i] = raycastHits[i].distance;
+
+                Vector3 line = new Vector3(transform.position.x+directions[i].x*ranges[i], transform.position.y, transform.position.z+directions[i].z*ranges[i]);
+                Debug.DrawLine(transform.position, line, Color.red, Time.deltaTime+.2f);
             }
         }
     }
