@@ -23,7 +23,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Distributed Multi-Robot SLAM in Unity Simulation Environment\\
+\title{Evaluation of Distributed Multi-Robot SLAM in a Unity Simulation Environment\\
 {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
 should not be used}
 \thanks{Identify applicable funding agency here. If none, delete this.}
@@ -69,6 +69,10 @@ The goal of this project is to implement a distributed, multi-robot SLAM approac
 
 This will require relative pose estimation, per robot, as well as map merging to integrate the local findings with the global map. Further, the solution will need to be resilient to perception outliers while ensuring it is not too conservative as to reject potential loop closure candidates in environment mapping. This SLAM approach will also have to consider bandwidth limitations and limit data exchange to processed data as opposed to raw sensor output. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%    Related Work     %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Related Work}
 Related Work section
 \subsection{Distributed Multi-Robot Localization}
@@ -82,13 +86,32 @@ Lajoie, Tamtoula, Chang, Carlone, and Beltrame present "DOOR-SLAM", a distribute
 %How does our soln compare?
 Our solution will focus on the implementation of the work proposed in \cite{monocular}. This work proposes a novel pose estimation that is vision based. Additionally, the authors developed a map merging method which uses place-recognition to determine the poses of the robots within the distributed group and build a global map by merging each robots local map. Unlike many other solutions, this approach allows for the use of distributed monocular SLAM in large scale outdoor settings. The authors also mentioned specific assumptions and limitations to this research. Once we have a working implementation, we plan to investigate these assumptions and limitations to improve the authors work, primarily focusing on computational performance and localization accuracy.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%     Methods     %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Approach}
 our Approach
 \subsection{Triton Robot}
 \subsection{ros\#}
 \subsection{Algorithm}
+\subsection{Simulation Details}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%     Evaluation    %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Performance Evaluation}
+\begin{enumerate}
+   \item experiments
+   \item tests
+   \item performance
+   \item evaluation of results
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%     Conclusion    %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
 
@@ -310,13 +333,9 @@ Conclusion
 % citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
+   \bibitem{b0} Sample Items
    \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
    \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-   \bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-   \bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-   \bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-   \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-   \bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
    \end{thebibliography}
 
 \end{document}
