@@ -34,8 +34,8 @@ namespace RosSharp.RosBridgeClient
                 header = new MessageTypes.Std.Header() {
                     // stamp = Time.time,
                     frame_id = WorldFrameID
-                    // child_frame_id = ChildFrameID
-                }
+                },
+                child_frame_id = ChildFrameID
             };
 //            if (PublishTF)
 //            {
