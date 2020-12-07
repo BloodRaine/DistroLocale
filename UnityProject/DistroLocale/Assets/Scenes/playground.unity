@@ -816,37 +816,6 @@ MonoBehaviour:
   range_max: 10
   ranges: []
   intensities: []
---- !u!114 &687702509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687702506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff98778ae051cfd40a6e4effdf851ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SecondsTimeout: 10
-  Serializer: 0
-  protocol: 0
-  RosBridgeServerUrl: ws://192.168.0.1:9090
---- !u!114 &687702510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687702506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /scan
-  laserScanReader: {fileID: 687702507}
-  FrameId: Unity
 --- !u!1 &735010209
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,9 +826,6 @@ GameObject:
   m_Component:
   - component: {fileID: 735010211}
   - component: {fileID: 735010210}
-  - component: {fileID: 735010213}
-  - component: {fileID: 735010212}
-  - component: {fileID: 735010214}
   m_Layer: 0
   m_Name: Robot1
   m_TagString: Untagged
@@ -896,51 +862,6 @@ Transform:
   m_Father: {fileID: 1628396543}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &735010212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735010209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /robot1/twist
-  TimeStep: 0
-  SubscribedTransform: {fileID: 735010211}
---- !u!114 &735010213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735010209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff98778ae051cfd40a6e4effdf851ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SecondsTimeout: 10
-  Serializer: 0
-  protocol: 0
-  RosBridgeServerUrl: ws://192.168.0.255:9090
---- !u!114 &735010214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735010209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606c7a0f1a4d07d4a8d2259a5a5bcfe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /robot1/position
-  PublishedTransform: {fileID: 735010211}
 --- !u!1 &761623029
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,9 +872,6 @@ GameObject:
   m_Component:
   - component: {fileID: 761623031}
   - component: {fileID: 761623030}
-  - component: {fileID: 761623033}
-  - component: {fileID: 761623032}
-  - component: {fileID: 761623034}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -990,51 +908,6 @@ Transform:
   m_Father: {fileID: 1628396543}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &761623032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761623029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /robot/twist
-  TimeStep: 0
-  SubscribedTransform: {fileID: 761623031}
---- !u!114 &761623033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761623029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff98778ae051cfd40a6e4effdf851ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SecondsTimeout: 10
-  Serializer: 0
-  protocol: 0
-  RosBridgeServerUrl: ws://192.168.0.255:9090
---- !u!114 &761623034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761623029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606c7a0f1a4d07d4a8d2259a5a5bcfe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /robot/position
-  PublishedTransform: {fileID: 761623031}
 --- !u!1001 &778863540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1246,6 +1119,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 65702495048144492, guid: 55d10a948ee3e2f47b9938586abf12be,
+        type: 3}
+      propertyPath: m_Name
+      value: Camera1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
       propertyPath: m_Name
@@ -1266,37 +1144,6 @@ GameObject:
   m_PrefabInstance: {fileID: 810971845}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &810971848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810971847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Topic: /scan1
-  laserScanReader: {fileID: 810971850}
-  FrameId: Unity
---- !u!114 &810971849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810971847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff98778ae051cfd40a6e4effdf851ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SecondsTimeout: 10
-  Serializer: 0
-  protocol: 0
-  RosBridgeServerUrl: ws://192.168.0.1:9090
---- !u!114 &810971850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2293,10 +2140,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1917321595}
   - component: {fileID: 1917321594}
-  - component: {fileID: 1917321592}
+  - component: {fileID: 1917321599}
+  - component: {fileID: 1917321598}
+  - component: {fileID: 1917321596}
   - component: {fileID: 1917321593}
+  - component: {fileID: 1917321592}
+  - component: {fileID: 1917321597}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: ROS_Interface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2311,11 +2162,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917321591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606c7a0f1a4d07d4a8d2259a5a5bcfe4, type: 3}
+  m_Script: {fileID: 11500000, guid: aa23b622c60c13f48bdfa74b2e974f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot/twist
-  PublishedTransform: {fileID: 761623031}
+  Topic: /robot1/pose
+  PublishedTransform: {fileID: 735010211}
+  FrameId: Unity
 --- !u!114 &1917321593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2325,11 +2177,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917321591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606c7a0f1a4d07d4a8d2259a5a5bcfe4, type: 3}
+  m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Topic: /robot1/twist
-  PublishedTransform: {fileID: 735010211}
+  TimeStep: 0
+  SubscribedTransform: {fileID: 735010211}
 --- !u!114 &1917321594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2346,6 +2199,8 @@ MonoBehaviour:
   Serializer: 0
   protocol: 0
   RosBridgeServerUrl: ws://192.168.0.255:9090
+  robot: {fileID: 761623029}
+  robot1: {fileID: 735010209}
 --- !u!4 &1917321595
 Transform:
   m_ObjectHideFlags: 0
@@ -2360,6 +2215,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1917321596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917321591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /robot/scan
+  laserScanReader: {fileID: 687702507}
+  FrameId: Unity
+--- !u!114 &1917321597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917321591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /robot1/scan
+  laserScanReader: {fileID: 810971848}
+  FrameId: Unity
+--- !u!114 &1917321598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917321591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa23b622c60c13f48bdfa74b2e974f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /robot/pose
+  PublishedTransform: {fileID: 761623031}
+  FrameId: Unity
+--- !u!114 &1917321599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917321591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /robot/twist
+  TimeStep: 0
+  SubscribedTransform: {fileID: 761623031}
 --- !u!1 &1964731768
 GameObject:
   m_ObjectHideFlags: 0
