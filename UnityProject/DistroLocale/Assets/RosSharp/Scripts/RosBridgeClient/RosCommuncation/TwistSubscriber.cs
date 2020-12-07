@@ -61,6 +61,8 @@ namespace RosSharp.RosBridgeClient
             SubscribedTransform.Rotate(Vector3.up, angularVelocity.y * deltaTime);
             SubscribedTransform.Rotate(Vector3.left, angularVelocity.z * deltaTime);
 
+            // print("message recieved");
+
             isMessageReceived = false;
         }
     }
