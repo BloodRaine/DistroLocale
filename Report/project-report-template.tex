@@ -6,6 +6,7 @@
 % 3. What is the Approach, and how does it address the specific challenges
 % 4. What are the Novelties, why is it novel, what impact does that have?
 % 5. What experiments did they perform to support the novelty? What are the metrics
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[conference]{IEEEtran}
@@ -22,7 +23,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Paper Title*\\
+\title{Distributed Multi-Robot SLAM in Unity Simulation Environment\\
 {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
 should not be used}
 \thanks{Identify applicable funding agency here. If none, delete this.}
@@ -57,14 +58,29 @@ component, formatting, style, styling, insert
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. 
+%Intro to this field, relevent info
+When exploring and mapping unknown environments, a robot must create some computational understanding of the environment around it. The Simultaneous Localization and Mapping (SLAM) problem addresses not only mapping and updating a map of the environment, but also simultaneously localizing the agent within that environment.
+
+%What is lacking in the field
+While there are effective state of the art methods for performing SLAM with a single robot, If one distributes this task among multiple robots, this could potentially improve localization \cite{1067998} and in some cases improve computation time \cite{Bonin} Members of the group would be able to rely on features found by other robots in the same task as well as locally-derived information.
+
+% What do we think we can do to make it better
+The goal of this project is to implement a distributed, multi-robot SLAM approach as previously researched, in which a team of robots cooperatively map a large-scale environment with high efficiency and accuracy. In particular our team will work to implement the work proposed by Chen, Lu, and Xiao in Distributed Monocular Multi-Robot SLAM \cite{monocular}
+
+This will require relative pose estimation, per robot, as well as map merging to integrate the local findings with the global map. Further, the solution will need to be resilient to perception outliers while ensuring it is not too conservative as to reject potential loop closure candidates in environment mapping. This SLAM approach will also have to consider bandwidth limitations and limit data exchange to processed data as opposed to raw sensor output. 
 
 \section{Related Work}
 Related Work section
 \subsection{Distributed Multi-Robot Localization}
 \subsection{Autonomous Marine Vehicles}
 \subsection{Unity vs. Gazebo Simulations}
+
+One approach to multi-robot SLAM is presented in \cite{1067998}. In this approach they use a single Kalman filter is used to estimate the pose, position and orientation) of all members of the group. 3 robots were used and began separated from one another. After a few updates of the system, cross correlation can be used to further provide estimations and begin mapping. Their approach used the same method of loop detection as standard single-robot SLAM, but added three additional modules to enable collaborative SLAM: Map processing, relative pose estimation, and map merging. Each robot conducts the same monocular SLAM while sharing their incremental maps via wireless radio. Once per step of the algorithm, the robot will traverse these maps and determine if it is in the same location another robot has already visited utilizing a place-recognition CNN. The robot will then estimate its pose compared to this candidate location, and merge the maps together.
+
+Lajoie, Tamtoula, Chang, Carlone, and Beltrame present "DOOR-SLAM", a distributed, online, and outlier-resilient SLAM for robotic teams \cite{Lajoie2020DOORSLAM}. Their approach is rooted in peer-to-peer connection between robots and has three key modules: loop closure detector, an outlier rejector, and distributed pose graph. The loop closure detector is a distributed algorithm which communicates with other in-range robots and outputs inter-robot loop closure measurements. This process has two subparts: place recognition, which uses a CNN to create compact image descriptors, followed by geometric verification, which uses relative pose estimates between two robots observing the same scene.  The outlier rejector module collects odometry and inter-robot measurements and uses these to compute the maximal set of pairwise consistent measurements, thus filtering out outliers. The distributed pose graph performs distributed SLAM. The system as a whole produces high-confidence inter-robot loop closures while rejecting outliers, resulting in accurate trajectory estimates while maintaining low bandwidth requirements.
+
+%How does our soln compare?
+Our solution will focus on the implementation of the work proposed in \cite{monocular}. This work proposes a novel pose estimation that is vision based. Additionally, the authors developed a map merging method which uses place-recognition to determine the poses of the robots within the distributed group and build a global map by merging each robots local map. Unlike many other solutions, this approach allows for the use of distributed monocular SLAM in large scale outdoor settings. The authors also mentioned specific assumptions and limitations to this research. Once we have a working implementation, we plan to investigate these assumptions and limitations to improve the authors work, primarily focusing on computational performance and localization accuracy.
 
 \section{Approach}
 our Approach
