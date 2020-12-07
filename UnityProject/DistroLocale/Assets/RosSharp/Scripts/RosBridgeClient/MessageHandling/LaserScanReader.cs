@@ -77,7 +77,7 @@ namespace RosSharp.RosBridgeClient
                         ranges[i] = raycastHits[i].distance;
 
                 Vector3 line = new Vector3(transform.position.x+directions[i].x*ranges[i], transform.position.y, transform.position.z+directions[i].z*ranges[i]);
-                Debug.DrawLine(transform.position, line, Color.red, Time.deltaTime+.2f);
+                // Debug.DrawLine(transform.position, line, Color.red, Time.deltaTime+.2f);
             }
         }
     }

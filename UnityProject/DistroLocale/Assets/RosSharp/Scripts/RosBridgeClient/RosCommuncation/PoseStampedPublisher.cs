@@ -23,8 +23,7 @@ namespace RosSharp.RosBridgeClient
     public class PoseStampedPublisher : UnityPublisher<MessageTypes.Geometry.PoseStamped>
     {
         public Transform PublishedTransform;
-        public string FrameId = "Unity";
-
+        public string FrameID = "world";
         private MessageTypes.Geometry.PoseStamped message;
 
         protected override void Start()
@@ -44,7 +43,7 @@ namespace RosSharp.RosBridgeClient
             {
                 header = new MessageTypes.Std.Header()
                 {
-                    frame_id = FrameId
+                    frame_id = FrameID
                 }
             };
         }
