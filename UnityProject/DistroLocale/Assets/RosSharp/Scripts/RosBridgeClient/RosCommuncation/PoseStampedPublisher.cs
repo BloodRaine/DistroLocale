@@ -59,7 +59,7 @@ namespace RosSharp.RosBridgeClient
 
         private static void GetGeometryPoint(Vector3 position, MessageTypes.Geometry.Point geometryPoint)
         {
-            geometryPoint.x = position.x;
+            geometryPoint.x = position.x; // negate?
             geometryPoint.y = position.y;
             geometryPoint.z = position.z;
         }

@@ -2,81 +2,88 @@
 
 namespace RosSharp.RosBridgeClient
 {
-   public class TFPublisher : UnityPublisher<MessageTypes.Tf2.TFMessage>
-   {
-       public Transform CurrentPosition;
+    public class TFPublisher : UnityPublisher<MessageTypes.Tf2.TFMessage>
+    {
+        public Transform WorldPosition;
+        public Transform ChildPosition;
 
 
-       public string WorldFrameID = "world";
-       public string ChildFrameID = "robot_base";
-        
-       private MessageTypes.Tf2.TFMessage tf_message;
-       private MessageTypes.Geometry.TransformStamped tfs;
+        public string WorldFrameID = "world";
+        public string ChildFrameID = "robot_base";
 
-       MessageTypes.Geometry.TransformStamped[] v1;
+        private MessageTypes.Tf2.TFMessage tf_message;
+        private MessageTypes.Geometry.TransformStamped tfs;
 
-       protected override void Start()
-       {
-           v1 = new MessageTypes.Geometry.TransformStamped[1];
+        MessageTypes.Geometry.TransformStamped[] v1;
 
-           base.Start();
-           InitializeMessage();
-       }
+        protected override void Start()
+        {
+            v1 = new MessageTypes.Geometry.TransformStamped[1];
 
-       private void FixedUpdate()
-       {
-           UpdateMessage();
-       }
+            base.Start();
+            InitializeMessage();
+        }
 
-       private void InitializeMessage()
-       {
-            tfs = new MessageTypes.Geometry.TransformStamped {
-                header = new MessageTypes.Std.Header() {
+        private void FixedUpdate()
+        {
+            UpdateMessage();
+        }
+
+        private void InitializeMessage()
+        {
+            tfs = new MessageTypes.Geometry.TransformStamped
+            {
+                header = new MessageTypes.Std.Header()
+                {
                     // stamp = Time.time,
                     frame_id = WorldFrameID
                 },
                 child_frame_id = ChildFrameID
             };
-//            if (PublishTF)
-//            {
-//                tf_message = new MessageTypes.Geometry.TransformStamped
-//                {
-//                    header = new MessageTypes.Std.Header()
-//                    {
-//                        frame_id = WorldFrameID
-//                    },
-//                    child_frame_id = ChildFrameId
-//                };
-//            }
-       }
+            //            if (PublishTF)
+            //            {
+            //                tf_message = new MessageTypes.Geometry.TransformStamped
+            //                {
+            //                    header = new MessageTypes.Std.Header()
+            //                    {
+            //                        frame_id = WorldFrameID
+            //                    },
+            //                    child_frame_id = ChildFrameId
+            //                };
+            //            }
+        }
 
-       private void UpdateMessage()
-       {
-        //    tfs = GetTransformStamped();
+        private void UpdateMessage()
+        {
+            //    tfs = GetTransformStamped();
             tfs.header.Update();
-            GetGeometryPoint(CurrentPosition.position.Unity2Ros(), tfs.transform.translation);
-            GetGeometryQuaternion(CurrentPosition.rotation.Unity2Ros(), tfs.transform.rotation);
+            GetGeometryPoint(ChildPosition.position.Unity2Ros(), WorldPosition.position.Unity2Ros(), ChildPosition.rotation.Unity2Ros(), tfs.transform.translation);
+            GetGeometryQuaternion(ChildPosition.rotation.Unity2Ros(), WorldPosition.rotation.Unity2Ros(), tfs.transform.rotation);
 
             v1[0] = tfs;
             tf_message = new MessageTypes.Tf2.TFMessage(v1);
 
             Publish(tf_message);
-       }
+        }
 
-       private static void GetGeometryPoint(Vector3 position, MessageTypes.Geometry.Vector3 translation)
-       {
-           translation.x = position.x;
-           translation.y = position.y;
-           translation.z = 0; // no vertical translation
-       }
+        private static void GetGeometryPoint(Vector3 position, Vector3 origin, Quaternion rotation, MessageTypes.Geometry.Vector3 translation)
+        {
+            //Quaternion reverse = Quaternion.Inverse(rotation);
+            //Vector3 newposition = reverse * position;
+            translation.x = (origin.x + position.x);
+            translation.y = (origin.y + position.y);
+            translation.z = 0; // no vertical translation
+        }
 
-       private static void GetGeometryQuaternion(Quaternion quaternion, MessageTypes.Geometry.Quaternion geometryQuaternion)
-       {
-           geometryQuaternion.x = quaternion.x;
-           geometryQuaternion.y = quaternion.y;
-           geometryQuaternion.z = quaternion.z;
-           geometryQuaternion.w = quaternion.w;
-       }
+        private static void GetGeometryQuaternion(Quaternion quaternion, Quaternion origin_quaternion, MessageTypes.Geometry.Quaternion geometryQuaternion)
+        {
+            // We don't do anything with the origin quaternion right now
+            // Quaternion reverse = Quaternion.Inverse(quaternion);
+            geometryQuaternion.x = quaternion.x;
+            geometryQuaternion.y = quaternion.y;
+            geometryQuaternion.z = quaternion.z;
+            geometryQuaternion.w = quaternion.w;
+        }
 
-   }
+    }
 }
