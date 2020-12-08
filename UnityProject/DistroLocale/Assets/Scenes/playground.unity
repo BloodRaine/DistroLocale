@@ -2253,7 +2253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot2/twist
+  Topic: /robot2/cmd_vel
   TimeStep: 0
   SubscribedTransform: {fileID: 735010211}
 --- !u!114 &1917321594
@@ -2345,7 +2345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot1/twist
+  Topic: /robot1/cmd_vel
   TimeStep: 0
   SubscribedTransform: {fileID: 761623031}
 --- !u!114 &1917321600
