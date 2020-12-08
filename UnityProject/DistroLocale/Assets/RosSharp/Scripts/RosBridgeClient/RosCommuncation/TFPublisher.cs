@@ -5,20 +5,23 @@ namespace RosSharp.RosBridgeClient
     public class TFPublisher : UnityPublisher<MessageTypes.Tf2.TFMessage>
     {
         public Transform WorldPosition;
-        public Transform ChildPosition;
+        public Transform Robot1Position;
+        public Transform Robot2Position;
 
 
         public string WorldFrameID = "world";
-        public string ChildFrameID = "robot_base";
+        public string Robot1FrameID = "robot1_base";
+        public string Robot2FrameID = "robot2_base";
 
         private MessageTypes.Tf2.TFMessage tf_message;
-        private MessageTypes.Geometry.TransformStamped tfs;
+        private MessageTypes.Geometry.TransformStamped tf1;
+        private MessageTypes.Geometry.TransformStamped tf2;
 
         MessageTypes.Geometry.TransformStamped[] v1;
 
         protected override void Start()
         {
-            v1 = new MessageTypes.Geometry.TransformStamped[1];
+            v1 = new MessageTypes.Geometry.TransformStamped[2];
 
             base.Start();
             InitializeMessage();
@@ -31,14 +34,23 @@ namespace RosSharp.RosBridgeClient
 
         private void InitializeMessage()
         {
-            tfs = new MessageTypes.Geometry.TransformStamped
+            tf1 = new MessageTypes.Geometry.TransformStamped
             {
                 header = new MessageTypes.Std.Header()
                 {
                     // stamp = Time.time,
                     frame_id = WorldFrameID
                 },
-                child_frame_id = ChildFrameID
+                child_frame_id = Robot1FrameID
+            };
+            tf2 = new MessageTypes.Geometry.TransformStamped
+            {
+                header = new MessageTypes.Std.Header()
+                {
+                    // stamp = Time.time,
+                    frame_id = WorldFrameID
+                },
+                child_frame_id = Robot2FrameID
             };
             //            if (PublishTF)
             //            {
@@ -56,11 +68,15 @@ namespace RosSharp.RosBridgeClient
         private void UpdateMessage()
         {
             //    tfs = GetTransformStamped();
-            tfs.header.Update();
-            GetGeometryPoint(ChildPosition.position.Unity2Ros(), WorldPosition.position.Unity2Ros(), ChildPosition.rotation.Unity2Ros(), tfs.transform.translation);
-            GetGeometryQuaternion(ChildPosition.rotation.Unity2Ros(), WorldPosition.rotation.Unity2Ros(), tfs.transform.rotation);
+            tf1.header.Update();
+            GetGeometryPoint(Robot1Position.position.Unity2Ros(), WorldPosition.position.Unity2Ros(), Robot1Position.rotation.Unity2Ros(), tf1.transform.translation);
+            GetGeometryQuaternion(Robot1Position.rotation.Unity2Ros(), WorldPosition.rotation.Unity2Ros(), tf1.transform.rotation);
+            tf2.header.Update();
+            GetGeometryPoint(Robot2Position.position.Unity2Ros(), WorldPosition.position.Unity2Ros(), Robot2Position.rotation.Unity2Ros(), tf2.transform.translation);
+            GetGeometryQuaternion(Robot2Position.rotation.Unity2Ros(), WorldPosition.rotation.Unity2Ros(), tf2.transform.rotation);
 
-            v1[0] = tfs;
+            v1[0] = tf1;
+            v1[1] = tf2;
             tf_message = new MessageTypes.Tf2.TFMessage(v1);
 
             Publish(tf_message);

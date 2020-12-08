@@ -854,7 +854,7 @@ GameObject:
   - component: {fileID: 735010211}
   - component: {fileID: 735010210}
   m_Layer: 0
-  m_Name: Robot1
+  m_Name: Robot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -900,7 +900,7 @@ GameObject:
   - component: {fileID: 761623031}
   - component: {fileID: 761623030}
   m_Layer: 0
-  m_Name: Robot
+  m_Name: Robot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -927,7 +927,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761623029}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.81, y: 0.2, z: -3.4}
+  m_LocalPosition: {x: -0.03, y: 0.2, z: 19.53}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 192328147}
@@ -1037,6 +1037,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 65702495048144492, guid: 55d10a948ee3e2f47b9938586abf12be,
+        type: 3}
+      propertyPath: m_Name
+      value: Camera1
+      objectReference: {fileID: 0}
     - target: {fileID: 609898126981743816, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -1099,7 +1104,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
@@ -1109,7 +1114,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
@@ -1174,7 +1179,7 @@ PrefabInstance:
     - target: {fileID: 65702495048144492, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
       propertyPath: m_Name
-      value: Camera1
+      value: Camera2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 55d10a948ee3e2f47b9938586abf12be,
         type: 3}
@@ -2206,7 +2211,6 @@ GameObject:
   - component: {fileID: 1917321595}
   - component: {fileID: 1917321594}
   - component: {fileID: 1917321599}
-  - component: {fileID: 1917321602}
   - component: {fileID: 1917321598}
   - component: {fileID: 1917321600}
   - component: {fileID: 1917321596}
@@ -2214,6 +2218,7 @@ GameObject:
   - component: {fileID: 1917321593}
   - component: {fileID: 1917321592}
   - component: {fileID: 1917321597}
+  - component: {fileID: 1917321602}
   m_Layer: 0
   m_Name: ROS_Interface
   m_TagString: Untagged
@@ -2228,14 +2233,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917321591}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa23b622c60c13f48bdfa74b2e974f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot1/pose
+  Topic: /robot2/pose
   PublishedTransform: {fileID: 735010211}
-  FrameID: world
+  FrameID: map
 --- !u!114 &1917321593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2243,12 +2248,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917321591}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot1/twist
+  Topic: /robot2/twist
   TimeStep: 0
   SubscribedTransform: {fileID: 735010211}
 --- !u!114 &1917321594
@@ -2295,9 +2300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot/scan
+  Topic: /robot1/scan
   laserScanReader: {fileID: 687702507}
-  FrameId: robot_laz
+  FrameId: robot1_base
 --- !u!114 &1917321597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2305,14 +2310,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917321591}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 938611d5f671cfe4f9be87c66d865ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot1/scan
+  Topic: /robot2/scan
   laserScanReader: {fileID: 810971848}
-  FrameId: robot1
+  FrameId: robot2_base
 --- !u!114 &1917321598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2325,7 +2330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa23b622c60c13f48bdfa74b2e974f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot/pose
+  Topic: /robot1/pose
   PublishedTransform: {fileID: 761623031}
   FrameID: map
 --- !u!114 &1917321599
@@ -2340,7 +2345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5dfb51482c2e47b602e8096d45712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot/twist
+  Topic: /robot1/twist
   TimeStep: 0
   SubscribedTransform: {fileID: 761623031}
 --- !u!114 &1917321600
@@ -2355,10 +2360,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb583b196bf351446900103ffc0f8589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot/odom
+  Topic: /robot1/odom
   PublishedTransform: {fileID: 761623031}
   FrameId: map
-  ChildFrameId: robot_base
+  ChildFrameId: robot1_odom
 --- !u!114 &1917321601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2373,9 +2378,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /tf
   WorldPosition: {fileID: 1964731769}
-  ChildPosition: {fileID: 761623031}
+  Robot1Position: {fileID: 761623031}
+  Robot2Position: {fileID: 735010211}
   WorldFrameID: map
-  ChildFrameID: robot_laz
+  Robot1FrameID: robot1_base
+  Robot2FrameID: robot2_base
 --- !u!114 &1917321602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,11 +2392,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917321591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606c7a0f1a4d07d4a8d2259a5a5bcfe4, type: 3}
+  m_Script: {fileID: 11500000, guid: eb583b196bf351446900103ffc0f8589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /robot/twist
-  PublishedTransform: {fileID: 2065595838}
+  Topic: /robot2/odom
+  PublishedTransform: {fileID: 735010211}
+  FrameId: map
+  ChildFrameId: robot2_odom
 --- !u!1 &1964731768
 GameObject:
   m_ObjectHideFlags: 0
