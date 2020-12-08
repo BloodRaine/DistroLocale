@@ -2297,7 +2297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /robot/scan
   laserScanReader: {fileID: 687702507}
-  FrameId: robot
+  FrameId: robot_laz
 --- !u!114 &1917321597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2350,7 +2350,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917321591}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb583b196bf351446900103ffc0f8589, type: 3}
   m_Name: 
@@ -2358,7 +2358,7 @@ MonoBehaviour:
   Topic: /robot/odom
   PublishedTransform: {fileID: 761623031}
   FrameId: map
-  ChildFrameId: robot
+  ChildFrameId: robot_base
 --- !u!114 &1917321601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2375,7 +2375,7 @@ MonoBehaviour:
   WorldPosition: {fileID: 1964731769}
   ChildPosition: {fileID: 761623031}
   WorldFrameID: map
-  ChildFrameID: robot
+  ChildFrameID: robot_laz
 --- !u!114 &1917321602
 MonoBehaviour:
   m_ObjectHideFlags: 0
