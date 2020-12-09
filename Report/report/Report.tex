@@ -1,0 +1,432 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Hao's 5 questions
+%
+% 1. What is the research Problem, Why is it important
+% 2. What are the specific theoretical challenges that existing work cannot well address
+% 3. What is the Approach, and how does it address the specific challenges
+% 4. What are the Novelties, why is it novel, what impact does that have?
+% 5. What experiments did they perform to support the novelty? What are the metrics
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{subcaption}
+\usepackage{graphicx, svg}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Evaluation of Distributed Multi-Robot SLAM in a Unity Simulation Environment\\
+% {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
+% should not be used}
+% \thanks{Identify applicable funding agency here. If none, delete this.}
+}
+
+\author{\IEEEauthorblockN{Luke Drong}
+\IEEEauthorblockA{
+ldrong@mines.edu}
+\and
+\IEEEauthorblockN{ Robinson Merillat}
+\IEEEauthorblockA{
+rdmerillat@mines.edu}
+}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%     Abstract      %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+In this project, we present and evaluate an on-line algorithm for robot simultaneous localization and mapping (SLAM). We simulate two robots within a simple maze environment in the Unity engine. Each robot is responsible for maintaining its local map, and the robots are not aware of their initial pose in their scene. When robots come into visual line of sight with each other, they may exchange relative pose data and their local maps. From this information, the robots can merge their local map with their peer's map and more effectively map their environment.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%    Introduction     %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+%Intro to this field, relevant info
+When exploring and mapping unknown environments, a robot must create some computational understanding of the environment around it. The Simultaneous Localization and Mapping (SLAM) problem addresses not only mapping and updating a map of the environment, but also simultaneously localizing the agent within that environment.
+
+%What is lacking in the field
+While there are effective state of the art methods for performing SLAM with a single robot, if one distributes this task among multiple robots, this could potentially improve localization \cite{1067998} and in some cases improve computation time \cite{Bonin}. Members of the group would be able to rely on features found by other robots in the same task as well as locally-derived information.
+
+% What do we think we can do to make it better
+The goal of this project is to implement a distributed, multi-robot SLAM approach as previously researched, in which a team of robots cooperatively map a large-scale environment with high efficiency and accuracy. In particular our team will implement the work proposed by Chen, Lu, and Xiao in Distributed Monocular Multi-Robot SLAM \cite{monocular}
+
+This will require relative pose estimation, per robot, as well as map merging to integrate the local findings with the global map. Further, the solution will need to be resilient to perception outliers while ensuring it is not too conservative as to reject potential loop closure candidates in environment mapping. This SLAM approach will also have to consider bandwidth limitations and limit data exchange to processed data as opposed to raw sensor output. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%    Related Work     %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Related Work}
+
+One approach to multi-robot SLAM is presented by S. I. Roumeliotis and G. A. Bekey in their 2002 paper on Distributed Multirobot Localization \cite{1067998}. This approach demonstrates how the singular Kalman filter for pose estimation can be decomposed into components that relate only to the individual robot, and that this computation can be run on all members of the group. Three robots were used and began separated from one another with an unknown starting pose. After a few updates of the system, cross correlation was used to further provide estimations and begin mapping. Their approach used the same method of loop detection as standard single-robot SLAM, but added three additional modules to enable collaborative SLAM: map processing, relative pose estimation, and map merging. Each robot conducts the same monocular SLAM while sharing their incremental maps via radio. Once per step of the algorithm, the robot will traverse these maps and determine if it is in the same location another robot has already visited utilizing a place-recognition CNN. The robot will then estimate its pose compared to this candidate location, and merge the maps together.
+
+Lajoie, Tamtoula, Chang, Carlone, and Beltrame present "DOOR-SLAM", a distributed, online, and outlier-resilient SLAM for robotic teams \cite{Lajoie2020DOORSLAM}. Their approach is rooted in peer-to-peer connection between robots and has three key modules: loop closure detector, an outlier rejector, and distributed pose graph. The loop closure detector is a distributed algorithm which communicates with other in-range robots and outputs inter-robot loop closure measurements. This process has two subparts: place recognition, which uses a CNN to create compact image descriptors, followed by geometric verification, which uses relative pose estimates between two robots observing the same scene.  The outlier rejector module collects odometry and inter-robot measurements and uses these to compute the maximal set of pairwise consistent measurements, thus filtering out outliers. The distributed pose graph performs distributed SLAM. The system as a whole produces high-confidence inter-robot loop closures while rejecting outliers, resulting in accurate trajectory estimates while maintaining low bandwidth requirements.
+
+Chen, Xieyuanli and Lu et. al. present another approach to distributed slam in their 2018 paper "Distributed monocular multi-robot SLAM" \cite{monocular}. This work proposes a novel pose estimation that is vision based, with extremely low data rate between peer robots. The authors developed a map merging method which uses place-recognition to determine the poses of the robots within the distributed group and builds a global map by merging each robots local map. Unlike many other solutions, this approach allows for the use of distributed monocular SLAM in large scale outdoor settings. The authors also mentioned specific assumptions and limitations to this research. Our adaption of this method uses 2D laser scans, rather than monocular location recognition, and focuses more on the novel map merging methods.
+
+In order to test or debug robotic applications, simulation software such as Gazebo, which has been the leader 3D simulation robotics software \cite{Tools} in usage, are used. However, in the ever expanding world of robotics, statistics from 2014 could be considered old news, and new methods of 3D robot simulation have begun to emerge to challenge Gazebo's tile for the most usable simulation software. It is no surprise, then, that the industry is seeking to move to professional software packages that are free for use in situations that it is not resold. A more recent review in 2019 \cite{CompareSim} compared the usability the current simulators that are most likely to be used, Gazebo, V-Rep, and Unity. 
+While the authors ranked Unity fairly low in terms of the SUS (System Usability Scale), Unity does have some distinct advantages over the competition. It is commercially supported software, free to use for non-profit purposes. It supports easy loading of community-shared assets, and allows user-written plugins and scripts to interact dynamically with the scene. Despite all these customization options, it requires no additional work for creating a basic simulation scene when compared to other options. % [Anime pronuciation] NICEU
+Additionally, Santos et. al. claim that the communication layer required several dependencies such as a Virtual Machine running Ubuntu. First hand use of the ROS to Unity communication framework ROS\# has shown this claim to be false. With this in mind, \cite{Konrad2019SimulationOM} investigates a comprehensive performance comparison of robotics simulations in Gazebo, and has shown that Unity is a viable, if not great, environment to perform simulations. The authors even suggest that testing an application in different simulators could highlight potential benefits or drawbacks of the targeted research and is valuable to do when able.
+
+Our approach will build on this idea and implement a simulation environment for the Triton robot which currently only has a simulation built in Gazebo. Unlike \cite{Konrad2019SimulationOM}, which performs SLAM with a singular robot, we will explore the possibilities that multiple robots provide.
+
+% ROS # 
+
+%How does our soln compare?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%     Methods     %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Approach}
+Our approach to this problem utilizes the map merging method of \cite{monocular} with the pose adaption of \cite{1067998}. 
+Each robot attempts SLAM and creates a local map. This local map is a much lower resolution than the raw sensor data, making it suitable for periodically updating a global map. 
+Each robot will localize itself relative to other robots using the methods of \cite{1067998}, where it creates a transform relating it's current pose relative to the other robot's pose after making visual contact. These pose methods will be used for the line of sight map merging between two robots.
+
+\subsection{Simulation}
+The robot(s) will be simulated within the Unity Game Engine in a simple maze environment. See Figure \ref{fig:maze} for the overview shape. 
+Each robot will publish topics to its respective ROS node, and will not access to other robot's data. This is to model the situation of each robot working independently, and not 
+communicating with one another unless expressly initiated. 
+
+
+\begin{figure}[ht]
+\includegraphics[width=\linewidth]{../unityScreenshots/maze_1.png}
+\caption{Simple Maze Scene in Unity}
+\label{fig:maze}
+\end{figure}
+
+
+By default, a Unity simulation cannot communicate with a ROS server. 
+Recent developments in the ROS to Unity communication package, ROS\# has allowed for a simpler simulation integration without requiring a total re-implementation of the ROS framework. 
+ROS\# is a set of open-source software libraries and tools in C\# for communicating with ROS from .NET applications, and has explicit support for Unity. 
+
+The version used for this project is ROS\# version 1.6, released December 2019. \cite{bischoffm}
+
+\subsection{Triton Robot}
+\begin{figure}[ht]
+\includegraphics[width=\linewidth]{Final Reaport/unityScreenshots/triton.PNG}
+\caption{The Triton Robot and its' 3D model counterpart.}
+\label{fig:triton}
+\end{figure}
+For the purposes of furthering research, the robot for this project is a simulated version of the Triton Robot, developed by the Mines Human-Centered Robotics Lab. 
+This robot is a small, cylindrical robot designed with indoor SLAM and robot teaming in mind.
+An LED ring on top of the robot can be used to provide visual signals to observers.
+It is nonholonomic and has omnidirectional movement with its three omnidirectional wheels. Each wheel has encoders for determining accurate odometry measurements. 
+For exteroreceptive sensing, the robot's default configuration uses a monocular RGB$+$D camera. 
+The compute module of the Triton is an NVIDIA Jetson Nano. The Nano is a 4-core ARM64 single board computer with a 128-core GPU. This GPU aboard such a small platform enables edge computation of multiple neural networks for image classification or speech recognition with headroom to spare. 
+Further, the Nano has available IO to support other add-on sensors though Ethernet, USB, HDMI, and GPIO. This allows the  robot to have various sensors and communication modules for the task, such as a 2D LIDAR scanner and WiFi capabilites as used in this simulation. 
+
+\subsection{Algorithm}
+Jiří Hörner, in his 2016 paper on "Map-Merging for a Multi-Robot System" provides two very useful software packages for multi robot slam: explore\_lite and map\_merge  \cite{Horner2016}.
+Hörner's explore\_lite package allows a robot to pick exploration goals based on a greedy frontier exploration algorithm. This is useful for autonomously driving a robot with the goal of exploring an unknown scene, discovering obstacles and frontiers to close the mapping region.
+The map\_merge package allows fast merging of local occupancy maps with a common reference frame, or an iterative approach for local maps with unknown relative relation. 
+
+Our algorithm builds upon these technologies. When robots A and B are within range and robot A has direct line of sight of robot B, the following is computed. First, B's pose relative to A is computed as $P_{BA}$. Next, we send this relative pose $P_{BA}$, A's local map, and A's current local pose, $P_{A}$. Using this data, the receiving robot B can convert A's occupancy grid into their local frame, and use map\_merge  to efficiently combine the two. 
+
+The relative pose of the robot can be found by:
+\begin{equation}
+P = \frac{1}{2}R_{r2} + min(RaycastHit).distance
+\label{eq}
+\end{equation}
+where $RaycastHit$ is the array of raycasts that hit another robot, r2 is the robot being detected, R is the radius of the Triton robot, and P is the relative pose of r2 with respect to r1. As the Triton robot is cylindrical, adding the radius of the robot to the distance between the center of one robot and the closes hit point on the detected robot's exterior will result in the pose difference between one robot and the other. 
+
+This newly updated local map results in explore\_lite providing additional exploration goals for the robot. With these map updates, robots are able to work together without ``repeating" work - exploring a known area
+
+
+\subsection{Simulation Details}
+
+Our simulation was setup to run in the simple maze scene with both 1 and 2 robots. As a baseline, we recorded the time to map the entire scene for the first robot and obtained an average score. We then repeated the experiment with multiple robots starting at opposite ends of the map and following the map-merging algorithm described above.
+
+To run the experiment, we started all services in the following order:
+\begin{enumerate}
+    \item ROS service and Message Bridge
+    \item Unity simulation
+    \item SLAM service (for each Robot node)
+    \item Rviz Map Vizualizer
+    \item Move\_Base Local Planner
+    \item explore\_lite service (for each node)
+    \item Robot Detector service (for each node)
+\end{enumerate}
+
+% The transformation frame hierarchy and pose update rate for this simulation is shown in Figure \ref{fig:frames}. 
+% \begin{figure}[ht]
+% \includegraphics[width=\linewidth]{../unityScreenshots/frames.pdf}
+% \caption{Transformation Frame Hierarchy}
+% \label{fig:frames}
+% \end{figure}
+The front half of this SLAM algorithm is shown in Figure \ref{fig:rosgraph_part}. 
+Note how each Robot node works independently for the local mapping phase. Not shown is the exploration phase, which consumes the `map' and `pose' topics for each robot, and outputs a `twist' command to move the robot to a new position and continue mapping.  
+\begin{figure}[hb]
+\def\svgwidth{\columnwidth}
+\includesvg{../unityScreenshots/rosgraph}
+\caption{ROS Graph - Mapping Components}
+\label{fig:rosgraph_part}
+\end{figure}
+
+After a few seconds of exploration, we recorded both local maps from the pair of robots.
+These are shown in Figure \ref{fig:local_maps}. 
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{.49\linewidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{../unityScreenshots/robot2map.png}
+  \caption{Robot 1}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.49\linewidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{../unityScreenshots/robot1map.png}
+  \caption{Robot 2}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Local Robot Maps}
+\label{fig:local_maps}
+\end{figure}
+
+After the robots detected each other, we recorded the merged map. Figure \ref{fig:local_map_3} shows a later iteration of the map display, which highlights the most recent updates.
+
+\begin{figure}[ht]
+\includegraphics[width=\linewidth]{../unityScreenshots/local_maps_3.png}
+\caption{Local Maps after Alignment and Merging}
+\label{fig:local_map_3}
+\end{figure}
+
+Note how after the robots met one another, the nearest unexplored region in Figure \ref{fig:local_map_3} was the same location for both robots. This was an unexpected finding which will be visited later. 
+
+
+\subsection{Challenges}
+
+This application posed several small challenges as well as a share of larger technical challenges. When working in robotic applications, having a wide understanding of robotic development and techniques is pertinent. Simple things like ROS namespaces, preexisting packages, and types of ROS topics to subscribe/publish to could cause several hours of digging through documents, examples, and tutorials. There is a lot of preexisting work that we can pull from, and discovering that is half the battle. There is no need to reinvent the wheel here for many of the things we wished to do. For example, we attempted to develop an internal robot navigation system that would publish twist messages, but after spending a lot of time with little to show for it, we switched to using pre-existing navigation methods.
+
+Further, we encountered multiple errors involving network time synchronization. Each message in a ROS system is timestamped, and when devices have out-of-sync clocks or have faulty clocks, message handling quickly breaks down. We encountered many errors between the desktop running Unity and the laptops running ROS, where messages were rejected due to clock jitter being too high. This was most prominent in our SLAM module, as the ROS Service would become flooded with invalid messages. One of our laptops was found to have a faulty clock; minutes after a forced NTP synchronization, it had already fallen out of sync by 20ms.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%     Evaluation    %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Performance Evaluation}
+
+To establish baseline performance of the SLAM system, we ran the maze scenario with a single robot, starting in the corner, and timed how long it took to map the closed area. We then added an additional robot and performed two tests: 
+\begin{enumerate}
+    \item where the robots started on opposite corners of the map near the thinner section so they would greedily head the opposite direction and thus explore the bounded region faster (ideal case)
+    \item The robots were set in the other corners of the map opposite of where they were in the first experiment so they would explore similarly but have to backtrack to pick up missed regions (non-ideal case)
+\end{enumerate}
+The results of these experiments can be seen in \ref{tab1}.
+
+\begin{figure}[ht]
+\includegraphics[width=\linewidth]{Final Reaport/unityScreenshots/ideal_map.PNG}
+\caption{Ideal starting positions and trajectory of two robots in the simulation map}
+\label{fig:ideal_map}
+\end{figure}
+
+The total map construction time given more than a single robot is highly dependent on the starting position of each robot. Nothing is keeping a robot for searching the same location as another and thus each robot may receive the same goal once they discover each other. This would cause them to both begin exploring first that area, then other regions that have not yet been fully explored. In our simulation this became evident as the robots reached the center of the room. In an ideal case, each robot would start in such a way that the largest area to explore is continuously ideal. Given that this is the case, having an additional robot almost halves the exploration time (time to center then extra to explore corners of the center room) as seen in \ref{tab1}. We can assume that the ideal case is not likely to happen often and thus that the exploration time will be between $0.5*T + t$ and $T$ where $T$ is the time a single robot takes to explore, and $t$ is the time to explore the last corners of the map.
+
+\begin{table}[htbp]
+\caption{Exploration Time}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Number of Robots}&\textbf{Approximate Time to Explore (s)}\\
+\hline
+1& 280\\
+\hline
+2 (ideal)& 155\\
+\hline
+2 (non-ideal)& 190\\
+\hline
+\end{tabular}
+\label{tab1}
+\end{center}
+\end{table}
+
+% \begin{table}[htbp]
+% \caption{Communication Costs}
+% \begin{center}
+% \begin{tabular}{|c|c|}
+% \hline
+% \textbf{Type of Message}&\textbf{Refresh Time}\\
+% \hline
+% 1& 280\\
+% \hline
+% 2 (ideal)& 155\\
+% \hline
+% 2 (non-ideal)& 190\\
+% \hline
+% \end{tabular}
+% \label{tab2}
+% \end{center}
+% \end{table}
+
+% \begin{enumerate}
+%   \item experiments
+%   {\color{red}\begin{itemize}
+%       \item Single-Robot Exploration 
+%       \item Pair-Robot Exploration
+%       \begin{itemize}
+%           \item Robots construct a local map.
+%           \item when they see each other, they can relate each other's positions.
+%           \item then they can copy the other robot's local map onto their map. 
+%       \end{itemize}
+%   \end{itemize}}
+%   \item Performance
+%   {\color{red}\begin{itemize}
+%       \item Time to explore maze
+%       \item Bandwidth requirements for sending an occupancy grid
+%   \end{itemize}}
+%   \item performance
+%   \item evaluation of results
+% \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%     Conclusion    %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusions}
+
+% What was the Goal / Novelty
+As the number of limitations surrounding the connections to and from Unity begin to diminish, the number of robotics applications making their way to Unity will greatly increase, however, it is important to understand what affect, if any, moving a simulation or application to Unity has. It was our goal to implement a well known mapping and navigation task using multiple Triton robots and gain knowledge on the performance of such a task in this new environment. Using ROS\# and Unity, we created a simulation communicating ROS topics over a local websocket and used slight modifications to preexisting SLAM methods in order to localize and map the simulated environment. A global map was constructed by merging the local maps generated by each individual robot upon line of sight within scan range of another robot.
+
+% Results
+As far as exploration time of the room goes, everything is as expected. In general, with more robots, the time to navigate and map an environment will decrease and continue doing so likely until the overhead cost overtakes the map generation time.
+
+What is more interesting is what occurs when two robots "see" each other. Given that they have no directive on where the goal of the other robot is, they may opt to go explore the same region after meeting up and merging their maps. This could potentially add excess time to the exploration and provide worse results than a single robot exploring the region. By checking if the goals of these two robots are within the same region when the local maps are swapped, we may be able to provide additional improvements in the speed of mapping the room.
+
+% Limitations and future work
+The main downside with Unity is that it is designed to develop games and not robotics applications As such, it is up to the robotics community to develop and maintain the ability to create robotic applications in Unity. There is no official long term support for robotic applications on Unity. Additionally the packages like ROS\# are open source packages that are not able to support every device or use case. Perform most preexisting ROS functionality relies on the ros\_bridge server and thus the websocket connection. This creates a bottleneck with a single point of failure.
+
+There are smaller, more efficient means of transferring ROS data of certain types across the ros\_bridge. ROS laser scan and point cloud objects can be quite large and take some time to communicate via websocket. Thus one method of compacting the data would be to instead communicate a compressed image, where the pixels of the image correlate to the scanned points within the scene. This would improve the message passing performance to and from Unity. Furthermore, finding a means to compact all information into a singular structure and communicating that solely would reduce the strain on the bottleneck. The benefit/hindrance of which could only be determined by calculating the overhead of packaging the data together.
+
+ROS\# may not be the only viable method of communicating ROS messages on a ROS network in unity. \cite{ros2unity} Or ROS\# may revise their data communication to allow for other methods than websocket connection. Either of these options may increase the complexity of setting up the system, but may lead to significantly improved performance depending on the types of messages being passed.
+
+% \section*{Acknowledgment}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%  FIN  %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{Prepare Your Paper Before Styling}
+% Before you begin to format your paper, first write and save the content as a 
+% separate text file. Complete all content and organizational editing before 
+% formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
+% proofreading, spelling and grammar.
+
+% \subsection{Abbreviations and Acronyms}\label{AA}
+% Define abbreviations and acronyms the first time they are used in the text, 
+% even after they have been defined in the abstract. Abbreviations such as 
+% IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use 
+% abbreviations in the title or heads unless they are unavoidable.
+
+% \subsection{Units}
+% \begin{itemize}
+% \item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
+% \item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
+% \item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
+% \item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.)
+% \end{itemize}
+
+% \subsection{Equations}
+% Number equations consecutively. To make your 
+% equations more compact, you may use the solidus (~/~), the exp function, or 
+% appropriate exponents. Italicize Roman symbols for quantities and variables, 
+% but not Greek symbols. Use a long dash rather than a hyphen for a minus 
+% sign. Punctuate equations with commas or periods when they are part of a 
+% sentence, as in:
+% \begin{equation}
+% a+b=\gamma\label{eq}
+% \end{equation}
+
+% Be sure that the 
+% symbols in your equation have been defined before or immediately following 
+% the equation. Use ``\eqref{eq}'', not ``Eq.~\eqref{eq}'' or ``equation \eqref{eq}'', except at 
+% the beginning of a sentence: ``Equation \eqref{eq} is . . .''
+
+% \subsection{\LaTeX-Specific Advice}
+
+% Please use ``soft'' (e.g., \verb|\eqref{Eq}|) cross references instead
+% of ``hard'' references (e.g., \verb|(1)|). That will make it possible
+% to combine sections, add equations, or change the order of figures or
+% citations without having to go through the file line by line.
+
+% Please don't use the \verb|{eqnarray}| equation environment. Use
+% \verb|{align}| or \verb|{IEEEeqnarray}| instead. The \verb|{eqnarray}|
+% environment leaves unsightly spaces around relation symbols.
+
+% Please note that the \verb|{subequations}| environment in {\LaTeX}
+% will increment the main equation counter even when there are no
+% equation numbers displayed. If you forget that, you might write an
+% article in which the equation numbers skip from (17) to (20), causing
+% the copy editors to wonder if you've discovered a new method of
+% counting.
+
+% {\BibTeX} does not work by magic. It doesn't get the bibliographic
+% data from thin air but from .bib files. If you use {\BibTeX} to produce a
+% bibliography you must send the .bib files. 
+
+% {\LaTeX} can't read your mind. If you assign the same label to a
+% subsubsection and a table, you might find that Table I has been cross
+% referenced as Table IV-B3. 
+
+% {\LaTeX} does not have precognitive abilities. If you put a
+% \verb|\label| command before the command that updates the counter it's
+% supposed to be using, the label will pick up the last counter to be
+% cross referenced instead. In particular, a \verb|\label| command
+% should not go before the caption of a figure or a table.
+
+% Do not use \verb|\nonumber| inside the \verb|{array}| environment. It
+% will not stop equation numbers inside \verb|{array}| (there won't be
+% any anyway) and it might stop a wanted equation number in the
+% surrounding equation.
+
+% \subsection{Some Common Mistakes}\label{SCM}
+% \begin{itemize}
+% \item The word ``data'' is plural, not singular.
+% \item The subscript for the permeability of vacuum $\mu_{0}$, and other common scientific constants, is zero with subscript formatting, not a lowercase letter ``o''.
+% \item In American English, commas, semicolons, periods, question and exclamation marks are located within quotation marks only when a complete thought or name is cited, such as a title or full quotation. When quotation marks are used, instead of a bold or italic typeface, to highlight a word or phrase, punctuation should appear outside of the quotation marks. A parenthetical phrase or statement at the end of a sentence is punctuated outside of the closing parenthesis (like this). (A parenthetical sentence is punctuated within the parentheses.)
+% \item A graph within a graph is an ``inset'', not an ``insert''. The word alternatively is preferred to the word ``alternately'' (unless you really mean something that alternates).
+% \item Do not use the word ``essentially'' to mean ``approximately'' or ``effectively''.
+% \item In your paper title, if the words ``that uses'' can accurately replace the word ``using'', capitalize the ``u''; if not, keep using lower-cased.
+% \item Be aware of the different meanings of the homophones ``affect'' and ``effect'', ``complement'' and ``compliment'', ``discreet'' and ``discrete'', ``principal'' and ``principle''.
+% \item Do not confuse ``imply'' and ``infer''.
+% \item The prefix ``non'' is not a word; it should be joined to the word it modifies, usually without a hyphen.
+% \item There is no period after the ``et'' in the Latin abbreviation ``et al.''.
+% \item The abbreviation ``i.e.'' means ``that is'', and the abbreviation ``e.g.'' means ``for example''.
+% \end{itemize}
+% An excellent style manual for science writers is \cite{b7}.
+
+
+% \subsection{Figures and Tables}
+% \paragraph{Positioning Figures and Tables} Place figures and tables at the top and 
+% bottom of columns. Avoid placing them in the middle of columns. Large 
+% figures and tables may span across both columns. Figure captions should be 
+% below the figures; table heads should appear above the tables. Insert 
+% figures and tables after they are cited in the text. Use the abbreviation 
+% ``Fig.~\ref{fig}'', even at the beginning of a sentence.
+
+
+% Figure Labels: Use 8 point Times New Roman for Figure labels. Use words 
+% rather than symbols or abbreviations when writing Figure axis labels to 
+% avoid confusing the reader. As an example, write the quantity 
+% ``Magnetization'', or ``Magnetization, M'', not just ``M''. If including 
+% units in the label, present them within parentheses. Do not label axes only 
+% with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization 
+% \{A[m(1)]\}'', not just ``A/m''. Do not label axes with a ratio of 
+% quantities and units. For example, write ``Temperature (K)'', not 
+% ``Temperature/K''.
+
+\bibliographystyle{plain}
+\bibliography{report.bib}
+
+\end{document}
